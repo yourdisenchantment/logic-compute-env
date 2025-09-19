@@ -17,3 +17,4 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_executable(lce-main main.cpp)
 
 add_subdirectory(programming-with-shared-variables/iterative-parallelism)
+add_subdirectory(programming-with-shared-variables/recursive-parallelism)
