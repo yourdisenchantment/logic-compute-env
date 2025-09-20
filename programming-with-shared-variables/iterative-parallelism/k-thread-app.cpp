@@ -4,7 +4,6 @@
 #include <random>
 #include <chrono>
 #include <thread>
-#include <map>
 
 using namespace std;
 using namespace chrono;
@@ -12,42 +11,42 @@ using namespace chrono;
 mt19937 generator((random_device())());
 uniform_int_distribution dist(-9, 9);
 
-void fillRandom(int n, double* matrix);
-void computeRowsRange(int n, int startRow, int endRow, const double* A, const double* B, double* C);
-void multiplyMatrix(int n, int numThreads, const double* A, const double* B, double* C);
-void printMatrix(int n, const double* matrix);
+constexpr int N = 1000;
 
-void fillRandom(const int n, double* matrix) {
+double A[N][N];
+double B[N][N];
+double C[N][N];
+
+constexpr int K = 50;
+thread threads[K];
+
+void fillRandom(int n, double matrix[N][N]);
+void computeRows(int n, int startRow, int endRow);
+void multiplyMatrix(int n, int numThreads);
+
+void fillRandom(const int n, double matrix[N][N]) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            matrix[i * n + j] = dist(generator);
+            matrix[i][j] = dist(generator);
         }
     }
 }
 
-void computeRowsRange(const int n, const int startRow, const int endRow, const double* A, const double* B, double* C) {
+void computeRows(const int n, const int startRow, const int endRow) {
     for (int i = startRow; i < endRow; i++) {
         for (int j = 0; j < n; j++) {
             double sum = 0.0;
 
             for (int k = 0; k < n; k++) {
-                sum += A[i * n + k] * B[k * n + j];
+                sum += A[i][k] * B[k][j];
             }
 
-            C[i * n + j] = sum;
+            C[i][j] = sum;
         }
     }
 }
 
-void multiplyMatrix(int n, int numThreads, const double* A, const double* B, double* C) {
-    if (numThreads <= 0)
-        numThreads = 1;
-
-    if (numThreads > n)
-        numThreads = n;
-
-    auto* threads = new thread[numThreads];
-
+void multiplyMatrix(const int n, const int numThreads) {
     const int rowsPerThread = n / numThreads;
     const int remainder = n % numThreads;
 
@@ -55,7 +54,7 @@ void multiplyMatrix(int n, int numThreads, const double* A, const double* B, dou
 
     for (int t = 0; t < numThreads; t++) {
         int endRow = startRow + rowsPerThread + (t < remainder ? 1 : 0);
-        threads[t] = thread(computeRowsRange, n, startRow, endRow, A, B, C);
+        threads[t] = thread(computeRows, n, startRow, endRow);
         startRow = endRow;
     }
 
@@ -64,52 +63,28 @@ void multiplyMatrix(int n, int numThreads, const double* A, const double* B, dou
             threads[t].join();
         }
     }
-
-    delete[] threads;
 }
 
-void printMatrix(int n, const double* matrix) {
-    n = min(10, n);
-    cout << endl;
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cout << matrix[i * n + j] << " ";
-        }
-
-        cout << endl;
-    }
-}
 
 int main() {
-    constexpr int n = 1000;
-    map<int, long long> results;
+    fillRandom(N, A);
+    fillRandom(N, B);
 
-    auto* A = new double[n * n];
-    auto* B = new double[n * n];
-
-    fillRandom(n, A);
-    fillRandom(n, B);
+    cout << "| k | time |" << endl;
+    cout << "|---|------|" << endl;
 
     for (int k = 1; k <= 50; k++) {
-        auto* C = new double[n * n];
-
-        for (int i = 0; i < n * n; i++) {
-            C[i] = 0.0;
+        for (auto& i : C) {
+            for (double& j : i) {
+                j = 0.0;
+            }
         }
 
         auto start = high_resolution_clock::now();
-        multiplyMatrix(n, k, A, B, C);
+        multiplyMatrix(N, k);
         auto end = high_resolution_clock::now();
 
-        const auto duration = duration_cast<milliseconds>(end - start).count();
-        results[k] = duration;
-
-        cout << k << " : " << duration << endl;
-
-        delete[] C;
+        duration<double, milli> d = end - start;
+        cout << "| " << k << " | " << d.count() << " |" << endl;
     }
-
-    delete[] A;
-    delete[] B;
 }
