@@ -1,4 +1,4 @@
-// ./programming-with-shared-variables/recursive-parallelism/recursive-app.cpp
+// ./programming-with-shared-variables/recursive-parallelism/multi-thread-app.cpp
 
 #include <cmath>
 #include <iostream>
