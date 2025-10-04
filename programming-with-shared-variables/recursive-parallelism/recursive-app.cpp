@@ -6,7 +6,7 @@
 using namespace std;
 
 constexpr double R = 1;
-constexpr double eps = 0.001;
+constexpr double eps = 1e-7;
 
 double f(double x);
 double integrate(double a, double b, double fa, double fb, double s);
@@ -18,9 +18,6 @@ double f(const double x) {
 double integrate(const double a, const double b, const double fa, const double fb, const double s) {
     const double m = (a + b) / 2;
     const double fm = f(m);
-
-    // const double sl = (b - a) * (fa + fm) / 4;
-    // const double sr = (b - a) * (fm + fb) / 4;
 
     const double sl = (m - a) * (fa + fm) / 2;
     const double sr = (b - m) * (fm + fb) / 2;
