@@ -1,8 +1,9 @@
 // ./programming-with-shared-variables/recursive-parallelism/multi-thread-app-ii.cpp
 
-
+#include <atomic>
 #include <cmath>
 #include <iostream>
+#include <mutex>
 #include <thread>
 
 using namespace std;
@@ -13,11 +14,24 @@ constexpr double eps = 1e-7;
 double f(double x);
 void integrate(double a, double b, double fa, double fb, double* s);
 
+mutex mtx;
+atomic current_threads(0);
+atomic max_threads(0);
+
 double f(const double x) {
     return sqrt(R * R - x * x);
 }
 
 void integrate(const double a, const double b, const double fa, const double fb, double* s) {
+    {
+        lock_guard lock(mtx);
+        ++current_threads;
+
+        if (current_threads.load() > max_threads.load()) {
+            max_threads.store(current_threads.load());
+        }
+    }
+
     double m = (a + b) / 2;
     double fm = f(m);
 
@@ -26,16 +40,23 @@ void integrate(const double a, const double b, const double fa, const double fb,
 
     if (abs(sl + sr - *s) < eps * 3) {
         *s = sl + sr;
+        lock_guard lock(mtx);
+        --current_threads;
         return;
     }
 
-    auto tl = thread(integrate, m, b, fm, fb, &sl);
-    auto tr = thread(integrate, a, m, fa, fm, &sr);
+    auto tl = thread(integrate, a, m, fa, fm, &sl);
+    auto tr = thread(integrate, m, b, fm, fb, &sr);
 
     tl.join();
     tr.join();
 
     *s = sl + sr;
+
+    {
+        lock_guard lock(mtx);
+        --current_threads;
+    }
 }
 
 int main() {
@@ -54,4 +75,6 @@ int main() {
     cout << s << endl;
     cout << area << endl;
     cout << error << endl;
+    cout << max_threads << endl;
+    cout << current_threads << endl;
 }
