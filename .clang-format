@@ -1,4 +1,3 @@
----
 Language: Cpp
 BasedOnStyle: LLVM
 AccessModifierOffset: -4
@@ -35,4 +34,3 @@ SpacesInConditionalStatement: false
 SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
 TabWidth: 4
-...

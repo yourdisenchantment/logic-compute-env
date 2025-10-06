@@ -28,8 +28,8 @@ void integrate(const double a, const double b, const double fa, const double fb,
         return;
     }
 
-    auto tl = thread(integrate, m, b, fm, fb, &sl);
-    auto tr = thread(integrate, a, m, fa, fm, &sr);
+    auto tl = thread(integrate, a, m, fa, fm, &sl);
+    auto tr = thread(integrate, m, b, fm, fb, &sr);
 
     tl.join();
     tr.join();
