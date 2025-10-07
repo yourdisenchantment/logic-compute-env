@@ -27,8 +27,8 @@ void integrate(const double a, const double b, const double fa, const double fb,
         lock_guard lock(mtx);
         ++current_threads;
 
-        if (current_threads.load() > max_threads.load()) {
-            max_threads.store(current_threads.load());
+        if (current_threads > max_threads) {
+            max_threads.store(current_threads);
         }
     }
 
