@@ -70,9 +70,6 @@ int main() {
     fillRandom(N, A);
     fillRandom(N, B);
 
-    cout << "| k | time |" << endl;
-    cout << "|---|------|" << endl;
-
     for (int k = 1; k <= 50; k++) {
         for (auto& i : C) {
             for (double& j : i) {
@@ -85,6 +82,7 @@ int main() {
         auto end = high_resolution_clock::now();
 
         duration<double, milli> d = end - start;
-        cout << "| " << k << " | " << d.count() << " |" << endl;
+
+        cout << k << d.count() << endl;
     }
 }
