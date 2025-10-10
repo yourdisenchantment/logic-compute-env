@@ -31,8 +31,13 @@ void integrate(const double a, const double b, const double fa, const double fb,
     auto tl = thread(integrate, a, m, fa, fm, &sl);
     auto tr = thread(integrate, m, b, fm, fb, &sr);
 
-    tl.join();
-    tr.join();
+    if (tl.joinable()) {
+        tl.join();
+    }
+
+    if (tr.joinable()) {
+        tr.join();
+    }
 
     *s = sl + sr;
 }
