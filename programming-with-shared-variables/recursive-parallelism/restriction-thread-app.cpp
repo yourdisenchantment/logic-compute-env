@@ -10,7 +10,7 @@ using namespace std;
 
 constexpr double R = 1;
 constexpr double eps = 1e-7;
-constexpr int max_thread_count = 4;
+constexpr int max_thread_count = 7;
 
 double f(double x);
 void integrate(double a, double b, double fa, double fb, double* s);
@@ -24,23 +24,8 @@ double f(const double x) {
 }
 
 void integrate(const double a, const double b, const double fa, const double fb, double* s) {
-    bool can_create_threads = false;
-
-    {
-        lock_guard lock(mtx);
-
-        if (current_threads < max_thread_count) {
-            current_threads += 2;
-            can_create_threads = true;
-
-            if (current_threads > max_threads) {
-                max_threads.store(current_threads);
-            }
-        }
-    }
-
-    double m = (a + b) / 2;
-    double fm = f(m);
+    const double m = (a + b) / 2;
+    const double fm = f(m);
 
     double sl = (m - a) * (fa + fm) / 2;
     double sr = (b - m) * (fm + fb) / 2;
@@ -50,21 +35,61 @@ void integrate(const double a, const double b, const double fa, const double fb,
         return;
     }
 
-    if (can_create_threads) {
-        auto tl = thread(integrate, a, m, fa, fm, &sl);
-        auto tr = thread(integrate, m, b, fm, fb, &sr);
+    bool createLeft = false;
+    bool createRight = false;
 
-        tl.join();
-        tr.join();
+    {
+        lock_guard lock(mtx);
+        if (current_threads < max_thread_count) {
+            createLeft = true;
+            ++current_threads;
 
-        {
-            lock_guard lock(mtx);
-            current_threads -= 2;
+            if (current_threads > max_threads) {
+                max_threads.store(current_threads);
+            }
         }
+        if (current_threads < max_thread_count) {
+            createRight = true;
+            ++current_threads;
 
+            if (current_threads > max_threads) {
+                max_threads.store(current_threads);
+            }
+        }
+    }
+
+    thread tl, tr;
+
+    if (createLeft) {
+        tl = thread([=, &sl] {
+            integrate(a, m, fa, fm, &sl);
+            {
+                lock_guard lock(mtx);
+                --current_threads;
+            }
+        });
     } else {
         integrate(a, m, fa, fm, &sl);
+    }
+
+    if (createRight) {
+        tr = thread([=, &sr] {
+            integrate(m, b, fm, fb, &sr);
+            {
+                lock_guard lock(mtx);
+                --current_threads;
+            }
+        });
+    } else {
         integrate(m, b, fm, fb, &sr);
+    }
+
+    if (tl.joinable()) {
+        tl.join();
+    }
+
+    if (tr.joinable()) {
+        tr.join();
     }
 
     *s = sl + sr;
