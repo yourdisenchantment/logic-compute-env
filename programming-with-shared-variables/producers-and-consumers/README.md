@@ -17,7 +17,7 @@
 
 ## Задача о N ферзях
 
-[n-queens.cpp](n-queens.cpp)
+[n-queens.cpp](n-queens.cpp) | [N_QUEENS.md](attachments/N_QUEENS.md)
 
 Реализовать поиск и вывод всех решений задачи об N ферзях в виде двух потоков/процессов:
 
