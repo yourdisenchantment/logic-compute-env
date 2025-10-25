@@ -1,4 +1,4 @@
-// ./programming-with-shared-variables/producers-and-consumers/n-qweens.cpp
+// ./programming-with-shared-variables/producers-and-consumers/n-queens.cpp
 
 #include <iostream>
 
@@ -69,7 +69,7 @@ bool isSafe(int board[MAX_N][MAX_N], const int row, const int col, const int N) 
  *   board - матрица доски
  *   N     - размер доски
  */
-void printQueenPositions(int board[MAX_N][MAX_N], int N) {
+void printQueenPositions(int board[MAX_N][MAX_N], const int N) {
     cout << solutionCount << ": "; // печатаем номер решения и двоеточие
     bool first = true; // флаг для расстановки запятых между координатами
 
@@ -133,9 +133,7 @@ void saveBoardAsImage(int board[MAX_N][MAX_N], const int N) {
     char filename[512]; // буфер имени файла
     sprintf(filename, "%s/solution_%04d.png", outputDir, solutionCount);
 
-    int ok = stbi_write_png(filename, size, size, colors, pixels, size * colors); // запись PNG
-
-    if (ok) {
+    if (stbi_write_png(filename, size, size, colors, pixels, size * colors)) {
         cout << "   Сохранено: " << filename << endl;
     } else {
         cout << "   Ошибка сохранения: " << filename << endl;
