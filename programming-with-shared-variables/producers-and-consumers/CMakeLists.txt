@@ -12,3 +12,7 @@ target_link_libraries(pwsv-pac-shared-variables PRIVATE Threads::Threads)
 add_executable(pwsv-pac-n-queens n-queens.cpp)
 target_include_directories(pwsv-pac-n-queens PRIVATE ${PROJECT_INCLUDE_DIR})
 target_link_libraries(pwsv-pac-n-queens PRIVATE Threads::Threads)
+
+add_executable(pwsv-pac-n-queens-popen n-queens-popen.cpp)
+target_include_directories(pwsv-pac-n-queens-popen PRIVATE ${PROJECT_INCLUDE_DIR})
+target_link_libraries(pwsv-pac-n-queens-popen PRIVATE Threads::Threads)

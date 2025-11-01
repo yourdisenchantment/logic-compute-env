@@ -14,9 +14,6 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_executable(lce-main main.cpp
-        programming-with-shared-variables/producers-and-consumers/shared-variables.cpp)
-
 add_subdirectory(programming-with-shared-variables/iterative-parallelism)
 add_subdirectory(programming-with-shared-variables/recursive-parallelism)
 add_subdirectory(programming-with-shared-variables/producers-and-consumers)
