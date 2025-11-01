@@ -10,10 +10,8 @@ using namespace std;
 
 // создание папок для сохранения картинок решений
 #include <sys/stat.h> // mkdir
-#include <sys/types.h> // типы для прав доступа
 #define MKDIR(path) mkdir(path, 0777)
 
-// https://habr.com/ru/articles/406423/
 constexpr int MAX_N = 20;
 int solutionCount = 0;
 char outputDir[256];
@@ -27,7 +25,7 @@ void solve(int board[MAX_N][MAX_N], int row, int N);
  * Функция: isSafe
  * Назначение: проверяет, безопасно ли поставить ферзя в клетку (row, col)
  * Аргументы:
- *   board - матрица доски N×N (1 - ферзь, 0 - пусто)
+ *   board - матрица доски NxN (1 - ферзь, 0 - пусто)
  *   row   - строка, куда пытаемся поставить ферзя
  *   col   - столбец, куда пытаемся поставить ферзя
  *   N     - размер доски
