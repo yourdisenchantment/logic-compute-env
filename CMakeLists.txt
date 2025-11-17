@@ -1,6 +1,6 @@
-# ./CMakeLists.txt
+# CMakeLists.txt
 
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 4.0)
 project(logic_compute_env LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -17,3 +17,4 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_subdirectory(programming-with-shared-variables/iterative-parallelism)
 add_subdirectory(programming-with-shared-variables/recursive-parallelism)
 add_subdirectory(programming-with-shared-variables/producers-and-consumers)
+add_subdirectory(programming-with-shared-variables/test-work)
