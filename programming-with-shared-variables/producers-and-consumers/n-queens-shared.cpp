@@ -65,7 +65,7 @@ public:
 
     // Потребитель забирает конфигурацию
     bool getBoard(int dstBoard[MAX_N][MAX_N], int& N) {
-        unique_lock<mutex> lock(mtx);
+        unique_lock lock(mtx);
 
         // Ждем, пока появятся данные или производитель завершится
         while (!hasData && !finished) {
@@ -93,7 +93,7 @@ public:
 
     // Производитель сигнализирует о завершении работы
     void setFinished() {
-        unique_lock<mutex> lock(mtx);
+        unique_lock lock(mtx);
         finished = true;
         cv.notify_one();
     }
