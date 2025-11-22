@@ -187,7 +187,7 @@ void saveBoardAsImage(int board[MAX_N][MAX_N], const int N, const int solutionNu
 void solve(int board[MAX_N][MAX_N], const int row, const int N, SharedBoard& sharedData) {
     if (row == N) {
         // Найдено решение - отправляем потребителю
-        // Производитель ЗАСНЁТ здесь, если потребитель ещё не забрал предыдущую доску
+        // Производитель ЗАСНЕТ здесь, если потребитель еще не забрал предыдущую доску
         sharedData.putBoard(board, N);
         return;
     }
