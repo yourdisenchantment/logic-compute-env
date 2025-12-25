@@ -1,4 +1,4 @@
-// ./programming-with-shared-variables/producers-and-consumers/n-queens-shared-threaded.cpp
+// programming-with-shared-variables/producers-and-consumers/n-queens-shared-threaded.cpp
 
 #include <condition_variable>
 #include <iostream>
@@ -19,8 +19,11 @@ constexpr int MAX_N = 20;
 char outputDir[256];
 
 bool isSafe(int board[MAX_N][MAX_N], int row, int col, int N);
+
 void printQueenPositions(int board[MAX_N][MAX_N], int N);
+
 void saveBoardAsImage(int board[MAX_N][MAX_N], int N);
+
 void solve(int board[MAX_N][MAX_N], int row, int N);
 
 // Класс для передачи конфигурации доски между потоками
@@ -35,8 +38,8 @@ class SharedBoard {
 public:
     SharedBoard() : boardSize(0), hasData(false), finished(false) {
         // Инициализация доски
-        for (auto& i : board) {
-            for (int& j : i) {
+        for (auto &i: board) {
+            for (int &j: i) {
                 j = 0;
             }
         }
@@ -64,7 +67,7 @@ public:
     }
 
     // Потребитель забирает конфигурацию
-    bool getBoard(int dstBoard[MAX_N][MAX_N], int& N) {
+    bool getBoard(int dstBoard[MAX_N][MAX_N], int &N) {
         unique_lock lock(mtx);
 
         // Ждем, пока появятся данные или производитель завершится
@@ -145,7 +148,7 @@ void printQueenPositions(int board[MAX_N][MAX_N], const int N, const int solutio
 void saveBoardAsImage(int board[MAX_N][MAX_N], const int N, const int solutionNum) {
     constexpr int size = 256;
     constexpr int colors = 3;
-    auto* pixels = new unsigned char[size * size * colors];
+    auto *pixels = new unsigned char[size * size * colors];
 
     const unsigned char white[3] = {255, 255, 255};
     const unsigned char black[3] = {0, 0, 0};
@@ -156,7 +159,7 @@ void saveBoardAsImage(int board[MAX_N][MAX_N], const int N, const int solutionNu
 
         for (int x = 0; x < size; x++) {
             const int c = x * N / size;
-            const unsigned char* color;
+            const unsigned char *color;
 
             if (board[r][c] == 1) {
                 color = queen;
@@ -184,7 +187,7 @@ void saveBoardAsImage(int board[MAX_N][MAX_N], const int N, const int solutionNu
 }
 
 // Рекурсивный поиск решений (производитель)
-void solve(int board[MAX_N][MAX_N], const int row, const int N, SharedBoard& sharedData) {
+void solve(int board[MAX_N][MAX_N], const int row, const int N, SharedBoard &sharedData) {
     if (row == N) {
         // Найдено решение - отправляем потребителю
         // Производитель ЗАСНЕТ здесь, если потребитель еще не забрал предыдущую доску

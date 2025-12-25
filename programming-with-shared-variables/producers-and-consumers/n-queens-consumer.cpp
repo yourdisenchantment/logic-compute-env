@@ -1,4 +1,4 @@
-// ./programming-with-shared-variables/producers-and-consumers/n-queens-producer.cpp
+// programming-with-shared-variables/producers-and-consumers/n-queens-producer.cpp
 
 #include <cstdio>
 #include <iostream>
@@ -40,7 +40,7 @@ void printQueenPositions(int board[MAX_N][MAX_N], const int N, const int solutio
 void saveBoardAsImage(int board[MAX_N][MAX_N], const int N, const int solutionNum) {
     constexpr int size = 256;
     constexpr int colors = 3;
-    auto* pixels = new unsigned char[size * size * colors];
+    auto *pixels = new unsigned char[size * size * colors];
 
     const unsigned char white[3] = {255, 255, 255};
     const unsigned char black[3] = {0, 0, 0};
@@ -50,7 +50,7 @@ void saveBoardAsImage(int board[MAX_N][MAX_N], const int N, const int solutionNu
         const int r = y * N / size;
         for (int x = 0; x < size; x++) {
             const int c = x * N / size;
-            const unsigned char* color;
+            const unsigned char *color;
 
             if (board[r][c] == 1) {
                 color = queen;
@@ -92,7 +92,7 @@ int main() {
     const string command = string(PRODUCER_PATH) + " " + to_string(N);
     cout << "Запуск дочернего процесса: " << command << endl;
 
-    FILE* pipe = popen(command.c_str(), "r");
+    FILE *pipe = popen(command.c_str(), "r");
     if (!pipe) {
         cerr << "Не удалось запустить producer!" << endl;
         return 1;

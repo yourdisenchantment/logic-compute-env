@@ -1,4 +1,4 @@
-// ./programming-with-shared-variables/recursive-parallelism/multi-thread-app.cpp
+// programming-with-shared-variables/recursive-parallelism/multi-thread-app.cpp
 
 #include <cmath>
 #include <iostream>
@@ -10,13 +10,14 @@ constexpr double R = 1;
 constexpr double eps = 1e-7;
 
 double f(double x);
-void integrate(double a, double b, double fa, double fb, double* s);
+
+void integrate(double a, double b, double fa, double fb, double *s);
 
 double f(const double x) {
     return sqrt(R * R - x * x);
 }
 
-void integrate(const double a, const double b, const double fa, const double fb, double* s) {
+void integrate(const double a, const double b, const double fa, const double fb, double *s) {
     double m = (a + b) / 2;
     double fm = f(m);
 

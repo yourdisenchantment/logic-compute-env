@@ -1,4 +1,4 @@
-# ./programming-with-shared-variables/test-work/CMakeLists.txt
+# programming-with-shared-variables/test-work/CMakeLists.txt
 
 cmake_minimum_required(VERSION 4.0)
 

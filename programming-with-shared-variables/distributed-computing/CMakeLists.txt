@@ -1,4 +1,4 @@
-# ./programming-with-shared-variables/distributed-computing/CMakeLists.txt
+# programming-with-shared-variables/distributed-computing/CMakeLists.txt
 
 cmake_minimum_required(VERSION 4.0)
 find_package(MPI REQUIRED)

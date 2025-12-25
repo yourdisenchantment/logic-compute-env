@@ -1,4 +1,4 @@
-// ./programming-with-shared-variables/producers-and-consumers/n-queens.cpp
+// programming-with-shared-variables/producers-and-consumers/n-queens.cpp
 
 #include <iostream>
 
@@ -17,8 +17,11 @@ int solutionCount = 0;
 char outputDir[256];
 
 bool isSafe(int board[MAX_N][MAX_N], int row, int col, int N);
+
 void printQueenPositions(int board[MAX_N][MAX_N], int N);
+
 void saveBoardAsImage(int board[MAX_N][MAX_N], int N);
+
 void solve(int board[MAX_N][MAX_N], int row, int N);
 
 /*
@@ -33,24 +36,30 @@ void solve(int board[MAX_N][MAX_N], int row, int N);
  *   true, если в этой клетке нет конфликтов по столбцу и двум верхним диагоналям
  */
 bool isSafe(int board[MAX_N][MAX_N], const int row, const int col, const int N) {
-    for (int i = 0; i < row; i++) { // идем по строкам выше текущей
-        if (board[i][col] == 1) { // если в том же столбце уже есть ферзь
+    for (int i = 0; i < row; i++) {
+        // идем по строкам выше текущей
+        if (board[i][col] == 1) {
+            // если в том же столбце уже есть ферзь
             return false; // то клетка небезопасна
         }
     }
 
     for (int i = row - 1, j = col - 1; // стартуем слева-сверху от (row, col)
          i >= 0 && j >= 0; // пока не вышли за границы
-         i--, j--) { // двигаемся по диагонали влево-вверх
-        if (board[i][j] == 1) { // если нашли ферзя на диагонали
+         i--, j--) {
+        // двигаемся по диагонали влево-вверх
+        if (board[i][j] == 1) {
+            // если нашли ферзя на диагонали
             return false; // клетка небезопасна
         }
     }
 
     for (int i = row - 1, j = col + 1; // стартуем справа-сверху от (row, col)
          i >= 0 && j < N; // пока не вышли за границы
-         i--, j++) { // двигаемся по диагонали вправо-вверх
-        if (board[i][j] == 1) { // если нашли ферзя на диагонали
+         i--, j++) {
+        // двигаемся по диагонали вправо-вверх
+        if (board[i][j] == 1) {
+            // если нашли ферзя на диагонали
             return false; // клетка небезопасна
         }
     }
@@ -71,9 +80,12 @@ void printQueenPositions(int board[MAX_N][MAX_N], const int N) {
     cout << solutionCount << ": "; // печатаем номер решения и двоеточие
     bool first = true; // флаг для расстановки запятых между координатами
 
-    for (int i = 0; i < N; i++) { // идем по строкам
-        for (int j = 0; j < N; j++) { // идем по столбцам
-            if (board[i][j] == 1) { // если в клетке (i, j) стоит ферзь
+    for (int i = 0; i < N; i++) {
+        // идем по строкам
+        for (int j = 0; j < N; j++) {
+            // идем по столбцам
+            if (board[i][j] == 1) {
+                // если в клетке (i, j) стоит ферзь
                 if (!first) {
                     cout << ", "; // если это не первая пара - добавляем запятую и пробел
                 }
@@ -101,7 +113,7 @@ void printQueenPositions(int board[MAX_N][MAX_N], const int N) {
 void saveBoardAsImage(int board[MAX_N][MAX_N], const int N) {
     constexpr int size = 256;
     constexpr int colors = 3;
-    auto* pixels = new unsigned char[size * size * colors]; // буфер пикселей
+    auto *pixels = new unsigned char[size * size * colors]; // буфер пикселей
 
     const unsigned char white[3] = {255, 255, 255};
     const unsigned char black[3] = {0, 0, 0};
@@ -112,11 +124,11 @@ void saveBoardAsImage(int board[MAX_N][MAX_N], const int N) {
 
         for (int x = 0; x < size; x++) {
             const int c = x * N / size; // номер столбца клетки на доске
-            const unsigned char* color; // указатель на выбранный цвет
+            const unsigned char *color; // указатель на выбранный цвет
 
-            if (board[r][c] == 1) { // если в этой клетке ферзь
+            if (board[r][c] == 1) {
+                // если в этой клетке ферзь
                 color = queen;
-
             } else {
                 color = ((r + c) % 2 == 0) ? white : black; // иначе клетка бел/чер
             }
@@ -150,15 +162,18 @@ void saveBoardAsImage(int board[MAX_N][MAX_N], const int N) {
  *   N     - размер доски
  */
 void solve(int board[MAX_N][MAX_N], const int row, const int N) {
-    if (row == N) { // если расставили ферзей во все N строк
+    if (row == N) {
+        // если расставили ферзей во все N строк
         solutionCount++; // увеличиваем номер решения
         printQueenPositions(board, N); // печатаем координаты ферзей
         saveBoardAsImage(board, N); // сохраняем картинку решения
         return; // возвращаемся, чтобы искать остальные решения
     }
 
-    for (int col = 0; col < N; col++) { // перебираем все столбцы в текущей строке
-        if (isSafe(board, row, col, N)) { // если можно поставить ферзя в (row, col)
+    for (int col = 0; col < N; col++) {
+        // перебираем все столбцы в текущей строке
+        if (isSafe(board, row, col, N)) {
+            // если можно поставить ферзя в (row, col)
             board[row][col] = 1; // ставим ферзя
             solve(board, row + 1, N); // рекурсивно идем в следующую строку
             board[row][col] = 0; // снимаем ферзя (откат) и пробуем следующий столбец

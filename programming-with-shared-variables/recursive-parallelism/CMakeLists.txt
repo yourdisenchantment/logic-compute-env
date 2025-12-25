@@ -1,4 +1,4 @@
-# ./programming-with-shared-variables/recursive-parallelism/CMakeLists.txt
+# programming-with-shared-variables/recursive-parallelism/CMakeLists.txt
 
 cmake_minimum_required(VERSION 4.0)
 

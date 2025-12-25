@@ -1,4 +1,4 @@
-// ./programming-with-shared-variables/iterative-parallelism/k-thread-app.cpp
+// programming-with-shared-variables/iterative-parallelism/k-thread-app.cpp
 
 #include <chrono>
 #include <iostream>
@@ -21,7 +21,9 @@ constexpr int K = 50;
 thread threads[K];
 
 void fillRandom(int n, double matrix[N][N]);
+
 void computeRows(int n, int startRow, int endRow);
+
 void multiplyMatrix(int n, int numThreads);
 
 void fillRandom(const int n, double matrix[N][N]) {
@@ -71,8 +73,8 @@ int main() {
     fillRandom(N, B);
 
     for (int k = 1; k <= 50; k++) {
-        for (auto& i : C) {
-            for (double& j : i) {
+        for (auto &i: C) {
+            for (double &j: i) {
                 j = 0.0;
             }
         }

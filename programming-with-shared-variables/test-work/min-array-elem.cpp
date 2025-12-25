@@ -1,4 +1,4 @@
-// ./programming-with-shared-variables/test-work/min-array-elem.cpp
+// programming-with-shared-variables/test-work/min-array-elem.cpp
 
 #include <iostream>
 #include <random>
@@ -12,7 +12,7 @@ uniform_int_distribution size_dist(10, 20);
 
 void findMinAndFill(int arr[], int start, int end);
 
-void findMinAndFill(int* arr, int start, int end) {
+void findMinAndFill(int *arr, int start, int end) {
     const int size = end - start;
 
     if (size <= 1) {

@@ -1,4 +1,4 @@
-// ./programming-with-shared-variables/recursive-parallelism/recursive-app.cpp
+// programming-with-shared-variables/recursive-parallelism/recursive-app.cpp
 
 #include <cmath>
 #include <iostream>
@@ -9,6 +9,7 @@ constexpr double R = 1;
 constexpr double eps = 1e-7;
 
 double f(double x);
+
 double integrate(double a, double b, double fa, double fb, double s);
 
 double f(const double x) {

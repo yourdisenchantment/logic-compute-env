@@ -1,4 +1,4 @@
-// ./programming-with-shared-variables/producers-and-consumers/n-queens-consumer.cpp
+// programming-with-shared-variables/producers-and-consumers/n-queens-consumer.cpp
 
 #include <cerrno>
 #include <cstdlib>
@@ -44,13 +44,13 @@ void solve(int board[MAX_N][MAX_N], const int row, const int N) {
     }
 }
 
-int main(const int argc, char* argv[]) {
+int main(const int argc, char *argv[]) {
     if (argc < 2) {
         cerr << "Usage: " << argv[0] << " <N>" << endl;
         return 1;
     }
 
-    char* endptr;
+    char *endptr;
     errno = 0;
     const long val = strtol(argv[1], &endptr, 10);
 

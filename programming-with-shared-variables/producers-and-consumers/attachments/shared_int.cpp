@@ -47,8 +47,6 @@ public:
 };
 
 int main() {
-
-
     SharedInteger s1;
     SharedInteger s2;
 

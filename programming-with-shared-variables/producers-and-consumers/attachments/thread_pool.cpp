@@ -1,4 +1,3 @@
-
 #include <atomic>
 #include <chrono>
 #include <condition_variable>
@@ -12,10 +11,12 @@ using namespace std;
 class Task {
 public:
     double l, r, eps;
+
     void solve();
 };
 
-class QueueClosedException {};
+class QueueClosedException {
+};
 
 class BlockingQueue {
     bool closed;
@@ -66,17 +67,19 @@ public:
     ThreadPool(int threadCount);
 
     void addTask(Task task);
+
     Task getTask();
+
     void close();
 };
 
-void threadPoolFunction(ThreadPool* pool) {
+void threadPoolFunction(ThreadPool *pool) {
     try {
         while (true) {
             Task task = pool->getTask();
             task.solve();
         }
-    } catch (QueueClosedException& e) {
+    } catch (QueueClosedException &e) {
     }
 }
 

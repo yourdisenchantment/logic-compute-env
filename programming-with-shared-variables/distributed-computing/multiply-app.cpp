@@ -1,4 +1,4 @@
-﻿// ./programming-with-shared-variables/distributed-computing/multiply-app.cpp
+﻿// programming-with-shared-variables/distributed-computing/multiply-app.cpp
 
 #include <iostream>
 #include <random>

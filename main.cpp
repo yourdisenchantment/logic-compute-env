@@ -1,3 +1,4 @@
 // ./main.cpp
 
-int main() {}
+int main() {
+}

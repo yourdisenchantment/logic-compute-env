@@ -1,4 +1,4 @@
-// ./programming-with-shared-variables/iterative-parallelism/single-thread-app.cpp
+// programming-with-shared-variables/iterative-parallelism/single-thread-app.cpp
 
 #include <chrono>
 #include <iostream>
@@ -16,7 +16,9 @@ double B[N][N];
 double C[N][N];
 
 void fillRandom(int n, double matrix[N][N]);
+
 void computeRow(int n, int i);
+
 void multiplyMatrix(int n);
 
 void fillRandom(const int n, double matrix[N][N]) {
@@ -49,9 +51,9 @@ int main() {
     fillRandom(N, A);
     fillRandom(N, B);
 
-    for (const int n : {10, 20, 50, 100, 200, 500, 1000}) {
-        for (auto& i : C) {
-            for (double& j : i) {
+    for (const int n: {10, 20, 50, 100, 200, 500, 1000}) {
+        for (auto &i: C) {
+            for (double &j: i) {
                 j = 0.0;
             }
         }

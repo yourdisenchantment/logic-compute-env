@@ -1,4 +1,4 @@
-# ./programming-with-shared-variables/producers-and-consumers/CMakeLists.txt
+# programming-with-shared-variables/producers-and-consumers/CMakeLists.txt
 
 cmake_minimum_required(VERSION 4.0)
 

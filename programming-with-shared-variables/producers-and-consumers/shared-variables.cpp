@@ -1,4 +1,4 @@
-// ./programming-with-shared-variables/producers-and-consumers/shared-variables.cpp
+// programming-with-shared-variables/producers-and-consumers/shared-variables.cpp
 
 #include <condition_variable>
 #include <iostream>
@@ -14,7 +14,8 @@ class SharedInteger {
     condition_variable cv;
 
 public:
-    SharedInteger() : hasData(false) {}
+    SharedInteger() : hasData(false) {
+    }
 
     void putValue(const int x) {
         unique_lock lock(mtx);
@@ -75,7 +76,8 @@ int findDivisors(const int n, int divisors[]) {
 int main() {
     SharedInteger sharedData;
 
-    thread producer([&] { // [&] - можем использовать sharedData
+    thread producer([&] {
+        // [&] - можем использовать sharedData
         cout << "Введите последовательность целых чисел (завершение: -1):" << endl;
 
         while (true) {

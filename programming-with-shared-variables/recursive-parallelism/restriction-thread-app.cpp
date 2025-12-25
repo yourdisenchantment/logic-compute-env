@@ -1,4 +1,4 @@
-// ./programming-with-shared-variables/recursive-parallelism/restriction-thread-app.cpp
+// programming-with-shared-variables/recursive-parallelism/restriction-thread-app.cpp
 
 #include <atomic>
 #include <cmath>
@@ -13,7 +13,8 @@ constexpr double eps = 1e-7;
 constexpr int max_thread_count = 7;
 
 double f(double x);
-void integrate(double a, double b, double fa, double fb, double* s);
+
+void integrate(double a, double b, double fa, double fb, double *s);
 
 mutex mtx;
 atomic current_threads(0);
@@ -23,7 +24,7 @@ double f(const double x) {
     return sqrt(R * R - x * x);
 }
 
-void integrate(const double a, const double b, const double fa, const double fb, double* s) {
+void integrate(const double a, const double b, const double fa, const double fb, double *s) {
     const double m = (a + b) / 2;
     const double fm = f(m);
 
